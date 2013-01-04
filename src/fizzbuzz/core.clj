@@ -12,3 +12,7 @@
                          (inc %)
                          %2)
                       (range))))
+
+(fizzbuzz {3 "fizz" 5 "buzz"})
+
+(fizzbuzz {3 "wibble" 4 "wobble"  5 "woo"})
