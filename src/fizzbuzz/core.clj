@@ -1,7 +1,7 @@
 (ns fizzbuzz.core)
 
 (defn mult-seq [n s]
-  (apply concat (repeat (concat (repeat (dec n) nil) [s]))))
+  (cycle (concat (repeat (dec n) nil) [s])))
 
 (defn fizzbuzz
         "Takes a map of multiplicands and strings"
@@ -13,6 +13,6 @@
                          %2)
                       (range))))
 
-(fizzbuzz {3 "fizz" 5 "buzz"})
+(take 30 (fizzbuzz {3 "fizz" 5 "buzz"}))
 
-(fizzbuzz {3 "wibble" 4 "wobble"  5 "woo"})
+(take 30 (fizzbuzz {2 "wibble" 3 "wobble"  5 "woo"}))
