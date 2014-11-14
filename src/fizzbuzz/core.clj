@@ -14,10 +14,10 @@
   (->> rules
        (map #(apply mult-seq %)) ; Convert rules( to cycling sequences
        (apply map str) ; Concatenate the strings in each position
-       (replace {"" nil})
-       (map (fn [position replacement]
-              (some identity [replacement position]))
-            (iterate inc 1))))
+       (replace {"" nil}) ; Replace any positions with no strings with a nil
+       (map (fn [position replacement] ; Choose string if we have one, otherwise position
+              (or replacement position))
+            (iterate inc 1)))) ; Generate positions
 
 
 ; (take 30 (fizzbuzz {3 "fizz" 5 "buzz"}))
@@ -30,15 +30,3 @@
 ;; "wobble" "wibblewoo" 11 "wibblewobble" 13 "wibble" "wobblewoo"
 ;; "wibble" 17 "wibblewobble" 19 "wibblewoo" "wobble" "wibble" 23
 ;; "wibblewobble" "woo" "wibble" "wobble" "wibble" 29 "wibblewobblewoo")
-
-#_(defn fizzbuzz
-  "Takes a map of multiplicands and replacement strings and produces
- an infinite 'fizzbuz' sequence"
-  [rules]
-  (->> rules
-       (map (fn [[k v]] (mult-seq k v))) ; Convert rules( to cycling sequences
-       (apply map str) ; Concatenate the strings in each position
-       (replace {"" nil})
-       (map (fn [position replacement]
-              (some identity [replacement position]))
-            (iterate inc 1))))
