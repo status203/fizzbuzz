@@ -1,6 +1,5 @@
 (ns fizzbuzz.core)
 
-
 (defn mult-seq
   "Creates a cycling sequence of n-1 nils followed by s e.g. (nil nil \"fizz\" nil nil \"fizz\" nil...)"
   [n s]
@@ -9,9 +8,10 @@
 
 (defn fizzbuzz
   "Takes a map of multiplicands and replacement strings and produces
- an infinite 'fizzbuz' sequence"
+ an infinite 'fizzbuzz' sequence"
   [rules]
   (->> rules
+       (into (sorted-map))
        (map #(apply mult-seq %)) ; Convert rules( to cycling sequences
        (apply map str) ; Concatenate the strings in each position
        (replace {"" nil}) ; Replace any positions with no strings with a nil

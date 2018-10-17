@@ -1,17 +1,19 @@
 (ns fizzbuzz.core-test
-  (:use midje.sweet
-        fizzbuzz.core))
+  (:require [clojure.test :refer :all]
+            [fizzbuzz.core :refer :all]))
 
-(tabular
- (facts "about creating the cycles to combine"
-        (fact (take ?truncate-at (mult-seq ?n ?s)) => ?result))
+(deftest multi-seq-test
+  (are [n s truncate-at expected]
+    (= expected (take truncate-at (mult-seq n s)))
+    2 "even" 5 [nil "even" nil "even" nil]
+    3 "tree!" 9 [nil nil "tree!" nil nil "tree!" nil nil "tree!" ]))
 
- ?truncate-at ?n ?s     ?result
- 5           2  "even" [nil "even" nil "even" nil])
-
-(tabular
- (facts "about calling fizzbuzz"
-        (fact (take ?truncate-at (fizzbuzz ?rules)) => ?result))
-
- ?truncate-at ?rules              ?result
- 15           {3 "fizz" 5 "buzz"} [1 2 "fizz" 4 "buzz" "fizz" 7 8 "fizz" "buzz" 11 "fizz" 13 14 "fizzbuzz"])
+(deftest fizzbuzz-test
+  (are [rules truncate-at expected]
+    (= expected (take truncate-at (fizzbuzz rules)))
+    {3 "fizz" 5 "buzz"} 15 [1 2 "fizz" 4 "buzz"
+                            "fizz" 7 8 "fizz" "buzz"
+                            11 "fizz" 13 14 "fizzbuzz"]
+    {5 "buzz" 3 "fizz"} 15 [1 2 "fizz" 4 "buzz"
+                            "fizz" 7 8 "fizz" "buzz"
+                            11 "fizz" 13 14 "fizzbuzz"]))
